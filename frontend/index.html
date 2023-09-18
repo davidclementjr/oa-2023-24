@@ -1,10 +1,29 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <script src="https://cdn.plot.ly/plotly-2.25.2.min.js" charset="utf-8"></script>
-        <script type="module" src="graph.mjs"></script>
-    </head>
-    <body>
-        <div id="graph"></div>
-    </body>
+   <head>
+      <script src="https://cdn.plot.ly/plotly-2.25.2.min.js" charset="utf-8"></script>
+      <script>
+         fetch("spotify-2023.csv")
+            .then(async res => {
+               const data = await res.text();
+               const parsedData = Papa.parse(data, { header: true }).data;
+               const x = parsedData.map(row => row.x);
+               const y = parsedData.map(row => row.y);
+               Plotly.newPlot("graph", [
+                  {
+                     x: x,
+                     y: y,
+                     type: "line",
+                     line: {
+                        color: "blue",
+                        width: 2
+                     }
+                  }
+               ]);
+            });
+      </script>
+   </head>
+   <body>
+      <div id="graph"></div>
+   </body>
 </html>
