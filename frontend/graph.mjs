@@ -1,8 +1,23 @@
-const graphDiv = document.getElementById("graph");
+const graphDiv = document.getElementById("graph")
 
-fetch(
-    "https://oa-2023-24-backend.onrender.com" //use "http://localhost:3000" if running sample express backend locally, or replace with your own backend endpoint url
+    fetch(
+
+    "https://oa-2023-24-backend.onrender.com"
+
 ).then(async res => {
-    Plotly.newPlot( graphDiv, [ await res.json() ]); 
+
+    const data = await res.json(); // parse the JSON response
+
+    Plotly.newPlot( graphDiv, [{ 
+        x: data.x, 
+        y: data.y, 
+        type: 'line', 
+        line: {
+            color: 'blue', 
+            width: 2
+        }
+    }]);
+
+});
 })
 
